@@ -62,54 +62,6 @@ def on_message(client, obj, msg):
     #print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     msg_cleaned = msg_raw[2:len(msg_raw)-1]
     print('[LOG - from topic '+ msg.topic +' - msg payload cleaned]: '+str(msg_cleaned))
-    words = msg_cleaned.split()
-    if msg_cleaned == "open all":
-        print('Opening all doors')
-        openAll()
-    elif msg_cleaned == "close all":
-        print('Closing all doors')
-        closeAll()
-    elif msg_cleaned == 'open all doors':
-        print("Opening all doors")
-        openAllDoors()
-    elif msg_cleaned == 'close all doors':
-        print("Closing all doors")
-        closeAllDoors()
-    elif msg_cleaned == 'open all windows':
-        print("Opening all windows")
-        openAllWindows()
-    elif msg_cleaned == 'close all windows':
-        print("Closing all windows")
-        closeAllWindows()
-    elif words[0] == 'open':
-        #open based on pin number
-        print("opening motor " + words[1])
-        '''
-        if words[1] == '15':
-            openMotorCustom(15,160)
-        else:
-        '''
-        openMotor(int(words[1]))
-    elif words[0] == 'close':
-        #close based on pin number
-        print("closing motor " + words[1])
-        '''
-        if words[1] == '15':
-            closeMotorCustom(15,50)
-        elif words[1] == '10':
-            closeMotorCustom(10,50)
-        elif words[1] == '11':
-            closeMotorCustom(11,55)
-        elif words[1] == '12':
-            closeMotorCustom(12,50)
-        else:
-        '''
-        closeMotor(int(words[1]))
-    elif words[0] == 'loop':
-        print("looping motor " + words[1])
-        loopMotor(int(words[1]))
-    else:
-        print('Unknown command')
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
@@ -130,16 +82,14 @@ mqttc.on_subscribe = on_subscribe
 # Uncomment to enable debug messages
 #mqttc.on_log = on_log
 
-# Parse CLOUDMQTT_URL (or fallback to localhost)
-#url_str = 'mqtt://m12.cloudmqtt.com:11110'
-#url = urlparse.urlparse(url_str)
-url = 'm12.cloudmqtt.com'
-port = 11110
-topic = 'scaledhome'
+# Parse CLOUDMQTT_URL 
+url = 'YOUR SERVER URL WITHOUT MQTT://'
+#ES url='m123.cloudmqtt.com'
+port = XXXXX
+topic = 'YOUR TOPIC'
 
 # Connect
-#mqttc.username_pw_set(url.username, url.password)
-mqttc.username_pw_set('actuatorcontroller', 'actuator')
+mqttc.username_pw_set('YOUR USERNAME', 'YOUR PASSWORD')
 mqttc.connect(url, port)
 
 # Start subscribe, with QoS level 0
